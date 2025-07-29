@@ -10,16 +10,18 @@
 
 * {box-sizing: border-box} 
 
+* {box-sizing: border-box} 
+
 .legend, .legend2 
-{ position:relative; width:840px; margin-left:auto; margin-right:auto; padding:3px 4px 5px 6px; background-color:azure; color:black; 
+{ position:relative; width:800px; margin-left:auto; margin-right:auto; padding:3px 4px 5px 6px; background-color:azure; color:black; 
   font-family: 'Inter', sans-serif; font-size:14px; border: 1px solid green  }
 
 .legend { top:4px; z-index:+2 }
 
-.legend2 { top:-134px; z-index:+1 }
+.legend2 { top:-86px; z-index:+1 }
 
 .frame
-{ position:relative; top:-28px; width:840px; margin-left:auto; margin-right:auto; border:0 }
+{ position:relative; top:-28px; width:800px; margin-left:auto; margin-right:auto; border:0 }
 
 </style>
  </head> 
@@ -40,58 +42,11 @@ style="height:54px; width:800px">
 </iframe>
 </div>
 
-<div style="display: flex; justify-content: center; width: 830px; margin: auto;">
-
-  <div style="width: 800px">
+<div class="frame">
     <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vRSSzQsM6izXxxxQNCQCXCnbWwQLid-GFLZSel39SnElJo6ZwK1fywqBE9Y7IukwcxVsmNlEvDETrwQ/pubhtml?gid=696965585&range=A3:T1000&single=true&widget=true&headers=false&rm=minimal"
-      style="position:relative; top: -62px; margin-left:-5px; height: 499px; width: 100%">
+      style="position:relative; top:-32px; height:499px; width:100%">
     </iframe>
   </div>
-
-  <div id="buttonColumn" style="display: flex; flex-direction: column; width: 30px; align-items: center"></div>
-
-</div>
-
-<script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbxGrVdox0yivm6h3D_G_GZNK16sJ9o0TvT0Pk8aSqOdU_Kn9cAAsyHwrVxkL94799_N/exec";
-
-  async function loadIDButtons() {
-    const res = await fetch(`${scriptURL}?mode=ids`);
-    const ids = await res.json();
-    const buttonColumn = document.getElementById('buttonColumn');
-
-    ids.forEach(entry => {
-      const link = document.createElement('a');
-      link.href = '#';
-      link.title = entry.id;
-      link.textContent = '🔲';
-      link.style.display = 'block';
-      link.style.margin = '2px';
-      link.style.textDecoration = 'none';
-      link.onclick = () => showRow(entry.row);
-      buttonColumn.appendChild(link);
-    });
-  }
-
-function showRow(row) {
-  fetch(`${scriptURL}?row=${row}`)
-    .then(response => response.text())
-    .then(html => {
-      document.getElementById('outputBox').innerHTML = html;
-    })
-    .catch(error => {
-      document.getElementById('outputBox').innerHTML = `<div style="color:red;">Error loading row ${row}</div>`;
-      console.error(error);
-    });
-}
-
-   loadIDButtons();
-</script>
-
-<div id="outputBox" style="width: 830px; margin: 10px auto; border: 1px solid #ccc; padding: 10px; min-height: 100px">
-  <!-- Output from the clicked row will appear here -->
-</div>
-
 
 <div class="legend2">
 Some text is here!
