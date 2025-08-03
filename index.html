@@ -66,7 +66,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
     if (!id) return;
 
     try {
-      const response = await fetch(`${scriptURL}?mode=json&row=${parseInt(userInput) + 2}`);
+      const response = await fetch(`${scriptURL}?mode=json&row=${parseInt(id) + 2}`);
       const data = await res.json();
 
       const html = `
