@@ -61,13 +61,13 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
 <script>
   const scriptURL = "https://script.google.com/macros/s/AKfycbxEis-5v-FDy2tyuX7HZgD5ZGPWHu76CIS_M9Q-tD0dLa9cqOgnJNsTO1oiVy_hY6OS/exec";
 
-  async function fetchRow() {
+    async function fetchRow() {
     const id = document.getElementById('idInput').value.trim();
     if (!id) return;
 
     try {
       const response = await fetch(`${scriptURL}?mode=json&row=${parseInt(id) + 2}`);
-      const data = await res.json();
+      const data = await response.json();
 
       const html = `
         <div style="background:#f9f9f9;padding:16px;border:1px solid #ccc;border-radius:8px;">
