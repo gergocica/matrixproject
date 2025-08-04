@@ -60,7 +60,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
 </div>
 
 <script>
-  const scriptURL = "https://script.google.com/macros/s/AKfycbzZaYzLkYzZOGI7L7Uxcz47ylNfaTUxdsXhYvbWFHeekjKb62XoPxNqFdWxtsiaYJNL/exec";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbz7xy_6Iyh8LFs3WgKOJ8dt78q3Zn1uJOKhM4xz_D3TcGB2J3D7jSFCPX9vmvvC8sjK/exec";
 
     async function fetchRow() {
     const id = document.getElementById('idInput').value.trim();
@@ -70,17 +70,20 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
       const response = await fetch(`${scriptURL}?mode=json&row=${parseInt(id) + 2}`);
       const data = await response.json();
 
-      const html = `
-          <div style="background:#f9f9f9;padding:16px;border:1px solid #ccc;border-radius:8px;">
+const html = `
+  <div style="background:#f9f9f9;padding:16px;border:1px solid #ccc;border-radius:8px;">
     <h4 style="margin-top:0;">ID ${id}</h4>
     <table style="width:100%; border-collapse:collapse;">
-      ${data.headers.map((header, i) => `
-        <tr>
-          <td style="padding:6px;border:1px solid #ddd;"><strong>${header}</strong></td>
-          <td style="padding:6px;border:1px solid #ddd;">${data.values[i]}</td>
-        </tr>`).join('')}
+      ${data.headers.map((header, i) => {
+        const displayValue = (header === "Active L3-s") ? data.fullL3 : data.values[i];
+        return `
+          <tr>
+            <td style="padding:6px;border:1px solid #ddd;"><strong>${header}</strong></td>
+            <td style="padding:6px;border:1px solid #ddd;">${displayValue}</td>
+          </tr>`;
+      }).join('')}
     </table>
-        </div>`;
+  </div>`;
 
       document.getElementById("rowOutput").innerHTML = html;
 
