@@ -76,8 +76,8 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
     <table style="width:100%; border-collapse:collapse;">
       ${data.headers.map((header, i) => `
         <tr>
-          <td style="padding:6px;border:1px solid #ddd;"><strong>Col ${String.fromCharCode(66+i)}</strong></td>
-          <td style="padding:6px;border:1px solid #ddd;">${val}</td>
+          <td style="padding:6px;border:1px solid #ddd;"><strong>${header}</strong></td>
+          <td style="padding:6px;border:1px solid #ddd;">${data.values[i]}</td>
         </tr>`).join('')}
     </table>
         </div>`;
