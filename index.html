@@ -71,15 +71,15 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
       const data = await response.json();
 
       const html = `
-        <div style="background:#f9f9f9;padding:16px;border:1px solid #ccc;border-radius:8px;">
-          <h4 style="margin-top:0;">Row ${data.row}</h4>
-          <table style="width:100%; border-collapse:collapse;">
-            ${data.values.map((val, i) => `
-              <tr>
-                <td style="padding:6px;border:1px solid #ddd;"><strong>Col ${String.fromCharCode(65+i)}</strong></td>
-                <td style="padding:6px;border:1px solid #ddd;">${val}</td>
-              </tr>`).join('')}
-          </table>
+          <div style="background:#f9f9f9;padding:16px;border:1px solid #ccc;border-radius:8px;">
+    <h4 style="margin-top:0;">ID ${id} (Row ${data.row})</h4>
+    <table style="width:100%; border-collapse:collapse;">
+      ${data.values.slice(1).map((val, i) => `
+        <tr>
+          <td style="padding:6px;border:1px solid #ddd;"><strong>Col ${String.fromCharCode(66+i)}</strong></td>
+          <td style="padding:6px;border:1px solid #ddd;">${val}</td>
+        </tr>`).join('')}
+    </table>
         </div>`;
 
       document.getElementById("rowOutput").innerHTML = html;
