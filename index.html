@@ -62,7 +62,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
 <script>
   const scriptURL = "https://script.google.com/macros/s/AKfycbz7xy_6Iyh8LFs3WgKOJ8dt78q3Zn1uJOKhM4xz_D3TcGB2J3D7jSFCPX9vmvvC8sjK/exec";
 
-    async function fetchRow() {
+  async function fetchRow() {
     const id = document.getElementById('idInput').value.trim();
     if (!id) return;
 
@@ -70,22 +70,73 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
       const response = await fetch(`${scriptURL}?mode=json&row=${parseInt(id) + 2}`);
       const data = await response.json();
 
-const html = `
-  <div style="background:#f9f9f9;padding:16px;border:1px solid #ccc;border-radius:8px;">
-    <h4 style="margin-top:0;">ID ${id}</h4>
-    <table style="width:100%; border-collapse:collapse;">
-      ${data.headers.map((header, i) => {
-        const displayValue = (header === "Active L3-s") ? data.fullL3 : data.values[i];
-        return `
-          <tr>
-            <td style="padding:6px;border:1px solid #ddd;"><strong>${header}</strong></td>
-            <td style="padding:6px;border:1px solid #ddd;">${displayValue}</td>
-          </tr>`;
-      }).join('')}
-    </table>
-  </div>`;
+      // 1️⃣ Header map (long labels for desktop)
+      const headerMap = {
+        "IN": "Initials",
+        "Join Date": "Join Date",
+        "Last Pay": "Last Payment Date",
+        "Sp": "Sponsored by",
+        "A?": "ID is Active?",
+        "PS": "Pos. under sponsor",
+        "GL": "Global level",
+        "L1": "No. of referrals on L1",
+        "L3": "No. of IDs on L3",
+        "DL": "Total no. of downline IDs",
+        "Placement path": "Placement Path",
+        "$M": "Maximum payout after ... IDs",
+        "$R": "Real payout after ... IDs",
+        "Active L1-s": "Active L1 IDs",
+        "Active L3-s": "Active L3 IDs",
+        "L?": "Days left until inactive",
+       "I?": "Days since inactive",
+  };  
 
-      document.getElementById("rowOutput").innerHTML = html;
+      // 2️⃣ Full label layout (for wide screens)
+      const fullLabelsHtml = `
+        <div style="background:#f9f9f9; padding:12px; border:1px solid #ccc; border-radius:8px;">
+          <h4 style="margin-top:0;">ID ${id}</h4>
+          <table style="width:100%; border-collapse:collapse;">
+            ${data.headers.map((header, i) => {
+              const label = headerMap[header] || header;
+              const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
+              return `
+                <tr>
+                  <td style="width:220px; padding:4px; border:1px solid #ddd;"><strong>${label}</strong></td>
+                  <td style="padding:6px; border:1px solid #ddd;">${value}</td>
+                </tr>`;
+            }).join('')}
+          </table>
+        </div>`;
+
+      // 3️⃣ Short header layout (for small screens)
+      const shortLabelsHtml = `
+        <div style="background:#f9f9f9; padding:12px; border:1px solid #ccc; border-radius:8px;">
+          <h4 style="margin-top:0;">ID ${id}</h4>
+
+          <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; margin-bottom: 10px">
+<strong>IN:</strong> Initials / <strong>Last Pay:</strong> Last payment date / <strong>Sp:</strong> Sponsored by /<br> 
+<strong>A?:</strong> Id is active? / <strong>PS:</strong> Pos. under sponsor / <strong>GL:</strong> Global level / <br> 
+<strong>L1:</strong> No. of referrals on L1 / <strong>L3:</strong> No. of IDs on L3 /<br> 
+<strong>DL:</strong> Total no. of downline IDs / <strong>$M:</strong> Maximum payout after ... IDs /<br>
+<strong>$R:</strong> Real payout after ... IDs / <strong>L?:</strong> Days left until inactive /<br> 
+<strong>I?:</strong> Days since inactive
+</div>
+
+         <table style="width:100%; border-collapse:collapse;">
+            ${data.headers.map((header, i) => {
+              const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
+              return `
+                <tr>
+                  <td style="padding:4px; border:1px solid #ddd;"><strong>${header}</strong></td>
+                  <td style="padding:4px; border:1px solid #ddd;">${value}</td>
+                </tr>`;
+            }).join('')}
+          </table>
+        </div>`;
+
+      // 4️⃣ Responsive render
+      const isMobile = window.innerWidth <= 480;
+      document.getElementById("rowOutput").innerHTML = isMobile ? shortLabelsHtml : fullLabelsHtml;
 
     } catch (err) {
       document.getElementById("rowOutput").innerHTML =
