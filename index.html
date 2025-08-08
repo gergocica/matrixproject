@@ -98,7 +98,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
       const fullLabelsHtml = `
         <div style="background:#f9f9f9; padding:12px; border:1px solid #ccc; border-radius:8px;">
           <h4 style="margin-top:0;">ID ${id}</h4>
-          <table style="width:100%; border-collapse:collapse;">
+          <table style="width:100%; border-collapse:separate">
             ${data.headers.map((header, i) => {
               const label = headerMap[header] || header;
               const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
