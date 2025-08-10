@@ -110,7 +110,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
               return `
                 <tr>
                   <td style="width:220px; padding:4px; background-color:green; border:1px solid #ddd; color:white"><strong>${label}</strong></td>
-                  <td style="padding:4px; border:1px solid #ddd;">${value}</td>
+                  <td style="padding:4px; background-color:azure; border:1px solid #ddd;">${value}</td>
                 </tr>`;
             }).join('')}
           </table>
@@ -135,8 +135,8 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
               const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
               return `
                 <tr>
-                  <td style="padding:4px; border:1px solid #ddd;"><strong>${header}</strong></td>
-                  <td style="padding:4px; border:1px solid #ddd;">${value}</td>
+                  <td style="padding:4px; background-color:green; border:1px solid #ddd; color:white"><strong>${header}</strong></td>
+                  <td style="padding:4px; background-color:azure; border:1px solid #ddd;">${value}</td>
                 </tr>`;
             }).join('')}
           </table>
