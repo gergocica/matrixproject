@@ -104,8 +104,8 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
               const label = headerMap[header] || header;
               const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
               return `
-                <tr>
-                  <td style="width:220px; padding:4px; background-color:green; border:1px solid #ddd; color:white; font-weight:bold">${label}</td>
+                <tr style="font-weight:bold">
+                  <td style="width:220px; padding:4px; background-color:green; border:1px solid #ddd; color:white">${label}</td>
                   <td style="padding:4px; background-color:azure; border:1px solid #ddd;">${value}</td>
                 </tr>`;
             }).join('')}
@@ -121,8 +121,8 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
               const label = headerMap[header] || header;
               const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
               return `
-                <tr>
-                  <td style="width:170px; padding:4px; background-color:green; border:1px solid #ddd; color:white; font-weight:normal">${label}</td>
+                <tr style="font-weight:normal">
+                  <td style="width:170px; padding:4px; background-color:green; border:1px solid #ddd; color:white">${label}</td>
                   <td style="padding:4px; background-color:azure; border:1px solid #ddd;">${value}</td>
                 </tr>`;
             }).join('')}
