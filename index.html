@@ -95,8 +95,8 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
         "L?": "Days left until inactive",
        "I?": "Days since inactive", };  
 
-      // 2️⃣ Full label layout (for wide screens)
-      const fullLabelsHtml = `
+      // 2️⃣ Big screen layout
+      const bigscreensHtml = `
         <div style="background:#f9f9f9; padding:8px; border:1px solid #ccc; border-radius:8px;">
           <h4 style="margin-top:0; margin-bottom:2px">ID ${id}</h4>
           <table style="width:100%; border-collapse:separate">
@@ -112,13 +112,13 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
           </table>
         </div>`;
 
-      // 3️⃣ Short header layout (for small screens)
-      const shortLabelsHtml = `
+      // 3️⃣ Small screen layout
+      const smallscreensHtml = `
         <div style="background:#f9f9f9; padding:8px; border:1px solid #ccc; border-radius:8px;">
           <h4 style="margin-top:0; margin-bottom:2px">ID ${id}</h4>
-
-            <table style="width:100%; border-collapse:collapse;">
+          <table style="width:100%; border-collapse:collapse;">
             ${data.headers.map((header, i) => {
+              const label = headerMap[header] || header;
               const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
               return `
                 <tr>
@@ -131,7 +131,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
 
       // 4️⃣ Responsive render
       const isMobile = window.innerWidth <= 400;
-      document.getElementById("rowOutput").innerHTML = isMobile ? shortLabelsHtml : fullLabelsHtml;
+      document.getElementById("rowOutput").innerHTML = isMobile ? smallscreensHtml : bugscreensHtml;
 
     } catch (err) {
       document.getElementById("rowOutput").innerHTML =
