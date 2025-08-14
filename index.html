@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-
 <head>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-<style>
+ <style>
 
 * {box-sizing: border-box} 
 
@@ -15,7 +14,6 @@
   font-family: 'Inter', sans-serif; font-size:14px; border: 1px solid green  }
 
 .legend { top:4px; z-index:+2 }
-
 .legend2 { top:-90px; z-index:+1 }
 
 .frame
@@ -30,9 +28,8 @@
 { width:100%;
 }
 
-</style>
- </head> 
-
+ </style>
+</head> 
 <body>
 
 <div class="legend">
@@ -96,8 +93,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
         "Active L1-s": "Active L1 IDs",
         "Active L3-s": "Active L3 IDs",
         "L?": "Days left until inactive",
-       "I?": "Days since inactive",
-  };  
+       "I?": "Days since inactive", };  
 
       // 2️⃣ Full label layout (for wide screens)
       const fullLabelsHtml = `
@@ -119,23 +115,14 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
       // 3️⃣ Short header layout (for small screens)
       const shortLabelsHtml = `
         <div style="background:#f9f9f9; padding:8px; border:1px solid #ccc; border-radius:8px;">
-          <h4 style="margin-top:0;">ID ${id}</h4>
+          <h4 style="margin-top:0; margin-bottom:2px">ID ${id}</h4>
 
-          <div style="font-family: 'Inter', sans-serif; font-size: 14px; color: #666; margin-bottom: 10px">
-<strong>IN:</strong> Initials / <strong>Last Pay:</strong> Last payment date / <strong>Sp:</strong> Sponsored by /<br> 
-<strong>A?:</strong> Id is active? / <strong>PS:</strong> Pos. under sponsor / <strong>GL:</strong> Global level / <br> 
-<strong>L1:</strong> No. of referrals on L1 / <strong>L3:</strong> No. of IDs on L3 /<br> 
-<strong>DL:</strong> Total no. of downline IDs / <strong>$M:</strong> Maximum payout after ... IDs /<br>
-<strong>$R:</strong> Real payout after ... IDs / <strong>L?:</strong> Days left until inactive /<br> 
-<strong>I?:</strong> Days since inactive
-</div>
-
-         <table style="width:100%; border-collapse:collapse;">
+            <table style="width:100%; border-collapse:collapse;">
             ${data.headers.map((header, i) => {
               const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
               return `
                 <tr>
-                  <td style="padding:4px; background-color:green; border:1px solid #ddd; color:white"><strong>${header}</strong></td>
+                  <td style="width:170px; padding:4px; background-color:green; border:1px solid #ddd; color:white">${header}</td>
                   <td style="padding:4px; background-color:azure; border:1px solid #ddd;">${value}</td>
                 </tr>`;
             }).join('')}
@@ -143,7 +130,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
         </div>`;
 
       // 4️⃣ Responsive render
-      const isMobile = window.innerWidth <= 480;
+      const isMobile = window.innerWidth <= 400;
       document.getElementById("rowOutput").innerHTML = isMobile ? shortLabelsHtml : fullLabelsHtml;
 
     } catch (err) {
