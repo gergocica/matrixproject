@@ -95,16 +95,32 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
         "Active L1-s": "Active L1 IDs",
         "Active L3-s": "Active L3 IDs",
         "L?": "Days left until inactive",
-       "I?": "Days since inactive", };  
+        "I?": "Days since inactive"
+      };
 
-      // 2️⃣ Big screen layout
+      // 2️⃣ Date formatter for Join Date
+      function formatJoinDate(value) {
+        if (!value) return value;
+        const date = new Date(value);
+        if (!isNaN(date.getTime())) {
+          return date.toLocaleDateString("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric"
+          });
+        }
+        return value;
+      }
+
+      // 3️⃣ Big screen layout
       const bigscreenHtml = `
         <div style="background:#f9f9f9; padding:8px; border:1px solid #ccc; border-radius:8px;">
           <h4 style="margin-top:0; margin-bottom:2px">ID ${id}</h4>
           <table style="width:100%; border-collapse:separate">
             ${data.headers.map((header, i) => {
               const label = headerMap[header] || header;
-              const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
+              let value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
+              if (header === "Join Date") value = formatJoinDate(value);
               return `
                 <tr style="font-weight:bold">
                   <td style="width:220px; padding:4px; background-color:green; border:1px solid #ddd; color:white">${label}</td>
@@ -114,14 +130,15 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
           </table>
         </div>`;
 
-      // 3️⃣ Small screen layout
+      // 4️⃣ Small screen layout
       const smallscreenHtml = `
         <div style="max-width:398px; margin:auto; background:#f9f9f9; padding:5px 1px; border:1px solid #ccc; border-radius:6px;">
           <h4 style="margin-top:0; margin-bottom:2px">ID ${id}</h4>
           <table style="width:100%; border-collapse:collapse;">
             ${data.headers.map((header, i) => {
               const label = headerMap[header] || header;
-              const value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
+              let value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
+              if (header === "Join Date") value = formatJoinDate(value);
               return `
                 <tr style="font-weight:normal">
                   <td style="width:40%; padding:4px; background-color:green; border:1px solid #ddd; color:white">${label}</td>
@@ -131,7 +148,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
           </table>
         </div>`;
 
-      // 4️⃣ Responsive render
+      // 5️⃣ Responsive render
       const isMobile = window.innerWidth <= 400;
       document.getElementById("rowOutput").innerHTML = isMobile ? smallscreenHtml : bigscreenHtml;
 
