@@ -98,19 +98,18 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
         "I?": "Days since inactive"
       };
 
-      // 2️⃣ Date formatter for Join Date
-      function formatJoinDate(value) {
+      // 2️⃣ Date formatter for both date columns
+      function formatDate(value) {
         if (!value) return value;
         const date = new Date(value);
-        if (!isNaN(date.getTime())) {
-          return date.toLocaleDateString("en-US", {
-            month: "2-digit",
-            day: "2-digit",
-            year: "numeric"
-          });
-        }
-        return value;
+        if (isNaN(date)) return value; // leave unchanged if not a valid date
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const year = date.getFullYear();
+        return `${month}/${day}/${year}`;
       }
+
+      const dateColumns = ["Join Date", "Last Pay"];
 
       // 3️⃣ Big screen layout
       const bigscreenHtml = `
@@ -120,7 +119,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
             ${data.headers.map((header, i) => {
               const label = headerMap[header] || header;
               let value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
-              if (header === "Join Date") value = formatJoinDate(value);
+              if (dateColumns.includes(header)) value = formatDate(value);
               return `
                 <tr style="font-weight:bold">
                   <td style="width:220px; padding:4px; background-color:green; border:1px solid #ddd; color:white">${label}</td>
@@ -138,7 +137,7 @@ If using a phone to view a 🔲 link, hold your phone in a horizontal position (
             ${data.headers.map((header, i) => {
               const label = headerMap[header] || header;
               let value = (header === "Active L3-s" && data.fullL3) ? data.fullL3 : data.values[i];
-              if (header === "Join Date") value = formatJoinDate(value);
+              if (dateColumns.includes(header)) value = formatDate(value);
               return `
                 <tr style="font-weight:normal">
                   <td style="width:40%; padding:4px; background-color:green; border:1px solid #ddd; color:white">${label}</td>
